@@ -1,3 +1,16 @@
+// 限制 scala 警告信息
+scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature", "-Xfatal-warnings")
+
+// 配置第三方依赖仓库地址
+resolvers += "Local Maven Repository" at "file://" + Path.userHome.absolutePath + "/.m2/repository"
+resolvers += "spark-packages" at "https://dl.bintray.com/spark-packages/maven"
+resolvers += Resolver.url("ooon ivy repo", url("http://repo.ooon.me/release"))(Resolver.ivyStylePatterns)
+
+externalResolvers := Resolver.combineDefaultResolvers(resolvers.value.toVector, mavenCentral = true)
+
+
+
+
 // the application itself
 lazy val app = project
   .in(file("."))
@@ -6,11 +19,8 @@ lazy val app = project
     scalaVersion := "2.11.12"
   )
 
-// --------------------------------------
-// -------- Package ENV Submodules ----------
-// --------------------------------------
-lazy val devPackage = project
-  .in(file("build/dev"))
+// -------- Package ENV Submodules --------
+lazy val devPackage = project.in(file("build/dev"))
   .enablePlugins(JavaAppPackaging)
   .settings(
     resourceDirectory in Compile := (resourceDirectory in(app, Compile)).value,
@@ -21,8 +31,7 @@ lazy val devPackage = project
   .dependsOn(app)
 
 
-lazy val testPackage = project
-  .in(file("build/test"))
+lazy val testPackage = project.in(file("build/test"))
   .enablePlugins(JavaAppPackaging)
   .settings(
     resourceDirectory in Compile := (resourceDirectory in(app, Compile)).value,
@@ -32,8 +41,7 @@ lazy val testPackage = project
   )
   .dependsOn(app)
 
-lazy val stagePackage = project
-  .in(file("build/stage"))
+lazy val stagePackage = project.in(file("build/stage"))
   .enablePlugins(JavaAppPackaging)
   .settings(
     resourceDirectory in Compile := (resourceDirectory in(app, Compile)).value,
@@ -43,8 +51,7 @@ lazy val stagePackage = project
   )
   .dependsOn(app)
 
-lazy val prodPackage = project
-  .in(file("build/prod"))
+lazy val prodPackage = project.in(file("build/prod"))
   .enablePlugins(JavaAppPackaging)
   .settings(
     resourceDirectory in Compile := (resourceDirectory in(app, Compile)).value,
