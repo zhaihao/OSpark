@@ -1,5 +1,9 @@
 import Dependencies._
 
+organization := "me.ooon"
+name         := "OSpark"
+scalaVersion := "2.11.12"
+
 // 限制 scala 编译警告信息
 scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature", "-Xfatal-warnings")
 
@@ -10,55 +14,27 @@ resolvers += Resolver.url("ooon ivy repo", url("http://repo.ooon.me/release"))(R
 
 externalResolvers := Resolver.combineDefaultResolvers(resolvers.value.toVector, mavenCentral = true)
 
-// the application itself
-lazy val app = project
-  .in(file("."))
-  .settings(
-    name         := "OSpark",
-    scalaVersion := "2.11.12",
-    libraryDependencies ++= Seq(
-      typesafe_config,
-      base
-    )
-  )
+libraryDependencies ++= Seq(typesafe_config, base)
 
-// -------- Package ENV Submodules --------
-lazy val devPackage = project.in(file("build/dev"))
-  .enablePlugins(JavaAppPackaging)
-  .settings(
-    resourceDirectory in Compile := (resourceDirectory in (app, Compile)).value,
-    mappings in Universal += {
-      ((resourceDirectory in Compile).value / "dev.conf") -> "conf/application.conf"
-    }
-  )
-  .dependsOn(app)
+lazy val renameEnvConfigTask = taskKey[Unit]("rename env config")
 
-lazy val testPackage = project.in(file("build/test"))
-  .enablePlugins(JavaAppPackaging)
-  .settings(
-    resourceDirectory in Compile := (resourceDirectory in (app, Compile)).value,
-    mappings in Universal += {
-      ((resourceDirectory in Compile).value / "test.conf") -> "conf/application.conf"
-    }
-  )
-  .dependsOn(app)
+renameEnvConfigTask := {
+  val confFile = buildEnv.value match {
+    case BuildEnv.Development => "dev.conf"
+    case BuildEnv.Test        => "test.conf"
+    case BuildEnv.Stage       => "stage.conf"
+    case BuildEnv.Production  => "prod.conf"
+  }
 
-lazy val stagePackage = project.in(file("build/stage"))
-  .enablePlugins(JavaAppPackaging)
-  .settings(
-    resourceDirectory in Compile := (resourceDirectory in (app, Compile)).value,
-    mappings in Universal += {
-      ((resourceDirectory in Compile).value / "stage.conf") -> "conf/application.conf"
-    }
-  )
-  .dependsOn(app)
+  val log = streams.value.log
+  log.info(s"Moving $confFile to application.conf")
+  val from = (resourceDirectory in Compile).value / confFile
+  val to   = (classDirectory in Compile).value / "application.conf"
+  IO.copyFile(from, to)
+  log.success("Done building env application.conf")
+}
 
-lazy val prodPackage = project.in(file("build/prod"))
-  .enablePlugins(JavaAppPackaging)
-  .settings(
-    resourceDirectory in Compile := (resourceDirectory in (app, Compile)).value,
-    mappings in Universal += {
-      ((resourceDirectory in Compile).value / "prod.conf") -> "conf/application.conf"
-    }
-  )
-  .dependsOn(app)
+copyResources in Compile := {
+  renameEnvConfigTask.value
+  (copyResources in Compile).value
+}
