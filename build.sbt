@@ -14,8 +14,9 @@ resolvers += Resolver.url("ooon ivy repo", url("http://repo.ooon.me/release"))(R
 
 externalResolvers := Resolver.combineDefaultResolvers(resolvers.value.toVector, mavenCentral = true)
 
-libraryDependencies ++= Seq(typesafe_config, base)
+libraryDependencies ++= Seq(typesafe_config, base, spark_core, spark_sql, graph_frame)
 
+// 多 env 支持
 lazy val renameEnvConfigTask = taskKey[Unit]("rename env config")
 
 renameEnvConfigTask := {

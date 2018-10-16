@@ -39,6 +39,7 @@ object BuildEnvPlugin extends AutoPlugin {
           case "prod"  => Some(BuildEnv.Production)
           case "stage" => Some(BuildEnv.Stage)
           case "test"  => Some(BuildEnv.Test)
+          case "dev"   => Some(BuildEnv.Development)
           case _       => None
         }
         .getOrElse(BuildEnv.Development)
