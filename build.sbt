@@ -9,12 +9,25 @@ scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature", "-Xfatal-warning
 
 // 配置第三方依赖仓库地址
 resolvers += "Local Maven Repository" at "file://" + Path.userHome.absolutePath + "/.m2/repository"
-resolvers += "spark-packages" at "https://dl.bintray.com/spark-packages/maven"
-resolvers += Resolver.url("ooon ivy repo", url("http://repo.ooon.me/release"))(Resolver.ivyStylePatterns)
+resolvers += "cloudera repo" at "https://repository.cloudera.com/artifactory/cloudera-repos/"
+resolvers += Resolver.url("ooon ivy repo", url("http://repo.ooon.me/release"))(
+  Resolver.ivyStylePatterns)
 
 externalResolvers := Resolver.combineDefaultResolvers(resolvers.value.toVector, mavenCentral = true)
 
-libraryDependencies ++= Seq(typesafe_config, base, spark_core, spark_sql, graph_frame)
+libraryDependencies ++= spark
+libraryDependencies ++= cdh
+libraryDependencies ++= Seq(base, typesafe_config, graph_frame, mysql)
+libraryDependencies ++= Seq(scala_logging, logback)
+
+excludeDependencies ++= Seq(
+  // spark 2.x jersey 依赖冲突
+  ExclusionRule("com.sun.jersey"),
+  ExclusionRule("com.sun.jersey.contribs"),
+  ExclusionRule("org.slf4j", "slf4j-log4j12")
+)
+
+dependencyOverrides ++= cdh // 强制 cdh 版本
 
 // 多 env 支持
 lazy val renameEnvConfigTask = taskKey[Unit]("rename env config")
@@ -32,10 +45,22 @@ renameEnvConfigTask := {
   val from = (resourceDirectory in Compile).value / confFile
   val to   = (classDirectory in Compile).value / "application.conf"
   IO.copyFile(from, to)
-  log.success("Done building env application.conf")
+  log.success("Done building env")
 }
 
 copyResources in Compile := {
   renameEnvConfigTask.value
   (copyResources in Compile).value
+}
+
+// 打包 spark archive 依赖
+lazy val sparkArchive = taskKey[Unit]("zip spark lib archive for spark.yarn.archive")
+sparkArchive := {
+  val log = streams.value.log
+  log.info("Archiving dependency jars")
+  val jars: Seq[(File, String)] =
+    (fullClasspath in Runtime).value.files.map(f => (f, f.getName)).filter(_._2.endsWith(".jar"))
+
+  IO.zip(jars, (baseDirectory in Compile).value / (name.value + "_lib.zip"))
+  log.info("Done zipping lib")
 }

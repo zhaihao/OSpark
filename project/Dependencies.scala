@@ -15,10 +15,39 @@ import sbt._
   */
 object Dependencies {
   val spark_version = "2.3.2"
+  val cdh_version   = "2.6.0-cdh5.6.0"
 
-  lazy val typesafe_config = "com.typesafe"     % "config"      % "1.3.3"
-  lazy val base            = "me.ooon"          %% "base"       % "1.0.25"
-  lazy val spark_core      = "org.apache.spark" %% "spark-core" % spark_version % Provided
-  lazy val spark_sql       = "org.apache.spark" %% "spark-sql"  % spark_version % Provided
-  lazy val graph_frame     = "graphframes"      % "graphframes" % "0.6.0-spark2.3-s_2.11"
+  lazy val base             = "me.ooon"                    %% "base"                % "1.0.25"
+  lazy val scala_logging    = "com.typesafe.scala-logging" %% "scala-logging"       % "3.9.0"
+  lazy val logback          = "ch.qos.logback"             % "logback-classic"      % "1.2.3"
+  lazy val typesafe_config  = "com.typesafe"               % "config"               % "1.3.3"
+  lazy val graph_frame      = "org.graphframes"            % "graphframes_2.11"     % "0.7.0-spark2.3-SNAPSHOT"
+  lazy val mysql            = "mysql"                      % "mysql-connector-java" % "5.1.47"
+
+  val spark = Seq(
+    "org.apache.spark" %% "spark-core"              % spark_version,
+    "org.apache.spark" %% "spark-sql"               % spark_version,
+    "org.apache.spark" %% "spark-yarn"              % spark_version,
+    "org.apache.spark" %% "spark-hive"              % spark_version,
+    "org.apache.spark" %% "spark-hive-thriftserver" % spark_version,
+    "org.apache.spark" %% "spark-graphx"            % spark_version
+  )
+
+  val cdh = Seq(
+    "org.apache.hadoop" % "hadoop-annotations"                % cdh_version,
+    "org.apache.hadoop" % "hadoop-auth"                       % cdh_version,
+    "org.apache.hadoop" % "hadoop-client"                     % cdh_version,
+    "org.apache.hadoop" % "hadoop-common"                     % cdh_version,
+    "org.apache.hadoop" % "hadoop-hdfs"                       % cdh_version,
+    "org.apache.hadoop" % "hadoop-mapreduce-client-app"       % cdh_version,
+    "org.apache.hadoop" % "hadoop-mapreduce-client-common"    % cdh_version,
+    "org.apache.hadoop" % "hadoop-mapreduce-client-core"      % cdh_version,
+    "org.apache.hadoop" % "hadoop-mapreduce-client-jobclient" % cdh_version,
+    "org.apache.hadoop" % "hadoop-mapreduce-client-shuffle"   % cdh_version,
+    "org.apache.hadoop" % "hadoop-yarn-api"                   % cdh_version,
+    "org.apache.hadoop" % "hadoop-yarn-client"                % cdh_version,
+    "org.apache.hadoop" % "hadoop-yarn-common"                % cdh_version,
+    "org.apache.hadoop" % "hadoop-yarn-server-common"         % cdh_version,
+    "org.mortbay.jetty" % "jetty"                             % "6.1.26.cloudera.4"
+  )
 }

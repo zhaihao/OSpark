@@ -1,0 +1,27 @@
+/*
+ * Copyright (c) 2018.
+ * OOON.ME ALL RIGHTS RESERVED.
+ * Licensed under the Mozilla Public License, version 2.0
+ * Please visit http://ooon.me or mail to zhaihao@ooon.me
+ */
+
+package org.apache.spark.sql.syntax
+import com.typesafe.scalalogging.StrictLogging
+import org.apache.spark.sql.Dataset
+
+import scala.language.implicitConversions
+
+/**
+  * DatasetOps
+  *
+  * @author zhaihao
+  * @version 1.0 2018/10/17 17:13
+  */
+final class DatasetOps[T](dataset: Dataset[T]) extends StrictLogging {
+  def log(numRows: Int = 20, truncate: Int = 20, vertical: Boolean = false) =
+    logger.info("\n" + dataset.showString(numRows, truncate, vertical))
+}
+
+trait ToDatasetOps {
+  @inline implicit def toDatasetOps[T](dataset: Dataset[T]) = new DatasetOps[T](dataset)
+}
