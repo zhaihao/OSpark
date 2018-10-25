@@ -11,6 +11,7 @@
     <conversionRule conversionWord="coloredLevel" converterClass="me.ooon.base.log.logback.ColoredLevel"/>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <append>false</append>
         <file>${spark.yarn.app.container.log.dir:-log}/stderr</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- daily rollover -->
@@ -22,7 +23,7 @@
             <!--<maxHistory>30</maxHistory>-->
         </rollingPolicy>
         <encoder>
-            <pattern>%date [%level] from %logger in %thread - %message%n%xException</pattern>
+            <pattern>%date [%level] [%thread] %logger - %message%n%xException</pattern>
         </encoder>
     </appender>
 
@@ -42,7 +43,6 @@
 
     <logger name="me.ooon.ospark" level="INFO"/>
     <logger name="org.apache.spark.sql.syntax" level="INFO"/>
-    <logger name=""  level="ERROR"/>
 
     <logger name="slick.jdbc.JdbcBackend.statement" level="DEBUG"/>
     <logger name="slick.jdbc.JdbcBackend.parameter" level="INFO"/>
@@ -54,7 +54,7 @@
 
     <root level="ERROR">
         <appender-ref ref="ASYNC_FILE" />
-        <!--<appender-ref ref="ASYNC_STDOUT"/>-->
+        <appender-ref ref="ASYNC_STDOUT"/>
     </root>
 
 </configuration>

@@ -26,14 +26,14 @@ object StartScreen extends Config with StrictLogging {
         |Welcome to
         |   ____              __
         |  / __/__  ___ _____/ /__
-        | _\ \/ _ \/ _ `/ __/  '_/
-        |/___/ .__/\_,_/_/ /_/\_\   version %s %s
+        | _\ \/ _ \/ _ `/ __/  '_/    env %s
+        |/___/ .__/\_,_/_/ /_/\_\   version %s
         |   /_/
         |   
         |Using Scala %s, %s, %s
         |
-      """.stripMargin.format(SPARK_VERSION,
-                             config.getString("env"),
+      """.stripMargin.format(config.getString("env"),
+                             SPARK_VERSION,
                              Properties.versionString,
                              Properties.javaVmName,
                              Properties.javaVersion))

@@ -24,7 +24,11 @@ excludeDependencies ++= Seq(
   // spark 2.x jersey 依赖冲突
   ExclusionRule("com.sun.jersey"),
   ExclusionRule("com.sun.jersey.contribs"),
-  ExclusionRule("org.slf4j", "slf4j-log4j12")
+  ExclusionRule("javax.servlet.jsp", "jsp-api"),
+  ExclusionRule("javax.servlet", "servlet-api"),
+  ExclusionRule("org.mortbay.jetty", "servlet-api"),
+  ExclusionRule("org.slf4j", "slf4j-log4j12"),
+  ExclusionRule("log4j", "log4j")
 )
 
 dependencyOverrides ++= cdh // 强制 cdh 版本

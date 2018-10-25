@@ -26,12 +26,13 @@ spark-submit \
     --conf spark.yarn.archive=hdfs://nameservice1/user/zhaihao/OSpark_lib.zip \
     --conf spark.ui.showConsoleProgress=false \
     --conf spark.speculation=true \
-    --conf spark.yarn.executor.memoryOverhead=2G \
-    --conf spark.yarn.driver.memoryOverhead=2G \
+    --conf spark.executor.memoryOverhead=2G \
+    --conf spark.driver.memoryOverhead=2G \
     --conf mapreduce.job.complete.cancel.delegation.tokens=false \
     --conf spark.hadoop.fs.hdfs.impl.disable.cache=true \
     --conf spark.hadoop.dfs.client.block.write.locateFollowingBlock.retries=6 \
     --conf spark.hadoop.hive.exec.max.dynamic.partitions=20000 \
+    --conf spark.sql.parquet.compression.codec=snappy \
     --conf spark.yarn.appMasterEnv.JAVA_HOME=/usr/java/jdk1.8.0_74/ \
     --conf spark.executorEnv.JAVA_HOME=/usr/java/jdk1.8.0_74/ \
     --queue root.fdsp_prod_etl.default \

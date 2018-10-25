@@ -14,6 +14,8 @@ import scala.language.implicitConversions
 /**
   * DatasetOps
   *
+  * log 需要开启 org.apache.spark.sql.syntax 的 logger 级别是 info
+  *
   * @author zhaihao
   * @version 1.0 2018/10/17 17:13
   */
