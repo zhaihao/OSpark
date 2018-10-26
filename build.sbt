@@ -18,7 +18,7 @@ externalResolvers := Resolver.combineDefaultResolvers(resolvers.value.toVector, 
 libraryDependencies ++= spark
 libraryDependencies ++= cdh
 libraryDependencies ++= log
-libraryDependencies ++= Seq(base, typesafe_config, graph_frame, mysql)
+libraryDependencies ++= Seq(base, typesafe_config, graph_frame, mysql, scopt)
 
 excludeDependencies ++= exclude
 
