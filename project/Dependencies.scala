@@ -17,12 +17,15 @@ object Dependencies {
   val spark_version = "2.3.2"
   val cdh_version   = "2.6.0-cdh5.6.0"
 
-  lazy val base             = "me.ooon"                    %% "base"                % "1.0.25"
-  lazy val scala_logging    = "com.typesafe.scala-logging" %% "scala-logging"       % "3.9.0"
-  lazy val logback          = "ch.qos.logback"             % "logback-classic"      % "1.2.3"
-  lazy val typesafe_config  = "com.typesafe"               % "config"               % "1.3.3"
-  lazy val graph_frame      = "org.graphframes"            % "graphframes_2.11"     % "0.7.0-spark2.3-SNAPSHOT"
-  lazy val mysql            = "mysql"                      % "mysql-connector-java" % "5.1.47"
+  lazy val base            = "me.ooon"         %% "base"                % "1.0.25"
+  lazy val typesafe_config = "com.typesafe"    % "config"               % "1.3.3"
+  lazy val graph_frame     = "org.graphframes" % "graphframes_2.11"     % "0.7.0-spark2.3-SNAPSHOT"
+  lazy val mysql           = "mysql"           % "mysql-connector-java" % "5.1.47"
+
+  lazy val log = Seq(
+    "com.typesafe.scala-logging" %% "scala-logging"  % "3.9.0",
+    "ch.qos.logback"             % "logback-classic" % "1.2.3"
+  )
 
   val spark = Seq(
     "org.apache.spark" %% "spark-core"              % spark_version,

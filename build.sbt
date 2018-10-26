@@ -17,11 +17,10 @@ externalResolvers := Resolver.combineDefaultResolvers(resolvers.value.toVector, 
 
 libraryDependencies ++= spark
 libraryDependencies ++= cdh
+libraryDependencies ++= log
 libraryDependencies ++= Seq(base, typesafe_config, graph_frame, mysql)
-libraryDependencies ++= Seq(scala_logging, logback)
 
 excludeDependencies ++= Seq(
-  // spark 2.x jersey 依赖冲突
   ExclusionRule("com.sun.jersey"),
   ExclusionRule("com.sun.jersey.contribs"),
   ExclusionRule("javax.servlet.jsp", "jsp-api"),
