@@ -37,4 +37,4 @@ spark-submit \
     --conf spark.executorEnv.JAVA_HOME=/usr/java/jdk1.8.0_74/ \
     --queue root.fdsp_prod_etl.default \
     --files "/opt/spark/conf/hive-site.xml,/opt/hadoop/etc/hdfs-site.xml,/opt/hadoop/etc/yarn-site.xml,./logback.xml" \
-    ospark_2.11-1.0.0-SNAPSHOT.jar
+    ospark_2.11-1.0.0-SNAPSHOT.jar "$@"
