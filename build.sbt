@@ -20,15 +20,7 @@ libraryDependencies ++= cdh
 libraryDependencies ++= log
 libraryDependencies ++= Seq(base, typesafe_config, graph_frame, mysql)
 
-excludeDependencies ++= Seq(
-  ExclusionRule("com.sun.jersey"),
-  ExclusionRule("com.sun.jersey.contribs"),
-  ExclusionRule("javax.servlet.jsp", "jsp-api"),
-  ExclusionRule("javax.servlet", "servlet-api"),
-  ExclusionRule("org.mortbay.jetty", "servlet-api"),
-  ExclusionRule("org.slf4j", "slf4j-log4j12"),
-  ExclusionRule("log4j", "log4j")
-)
+excludeDependencies ++= exclude
 
 dependencyOverrides ++= cdh // 强制 cdh 版本
 

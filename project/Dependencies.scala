@@ -53,4 +53,14 @@ object Dependencies {
     "org.apache.hadoop" % "hadoop-yarn-server-common"         % cdh_version,
     "org.mortbay.jetty" % "jetty"                             % "6.1.26.cloudera.4"
   )
+  
+  val exclude = Seq(
+    ExclusionRule("com.sun.jersey"),
+    ExclusionRule("com.sun.jersey.contribs"),
+    ExclusionRule("javax.servlet.jsp", "jsp-api"),
+    ExclusionRule("javax.servlet", "servlet-api"),
+    ExclusionRule("org.mortbay.jetty", "servlet-api"),
+    ExclusionRule("org.slf4j", "slf4j-log4j12"),
+    ExclusionRule("log4j", "log4j")
+  )
 }
