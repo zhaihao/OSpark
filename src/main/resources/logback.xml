@@ -29,7 +29,7 @@
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%-100(%date %coloredLevel %logger{50}) - %message%n%xException{10}</pattern>
+            <pattern>%-80(%date{HH:mm:ss.SSS} %coloredLevel %logger{50}) - %message%n%xException{10}</pattern>
         </encoder>
     </appender>
 

@@ -16,4 +16,11 @@ import com.typesafe.config.ConfigFactory
   */
 trait Config {
   lazy val config = ConfigFactory.load()
+  lazy val env    = Env.withName(config.getString("env"))
+}
+
+object Env extends Enumeration {
+  type Env = Value
+
+  val prod, test, stage, dev = Value
 }

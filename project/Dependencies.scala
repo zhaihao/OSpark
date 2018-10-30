@@ -17,10 +17,10 @@ object Dependencies {
   val spark_version = "2.3.2"
   val cdh_version   = "2.6.0-cdh5.6.0"
 
-  lazy val base            = "me.ooon"          %% "base"                % "1.0.25"
-  lazy val scopt           = "com.github.scopt" %% "scopt"               % "3.7.0"
-  lazy val typesafe_config = "com.typesafe"     % "config"               % "1.3.3"
+  lazy val base = "me.ooon" %% "base" % "1.0.27"
   lazy val graph_frame     = "org.graphframes"  %% "graphframes"         % "0.7.0-spark2.3-SNAPSHOT"
+  lazy val scalatest       = "org.scalatest" %% "scalatest" % "3.0.4" % Test
+  lazy val typesafe_config = "com.typesafe"  % "config"     % "1.3.3"
   lazy val mysql           = "mysql"            % "mysql-connector-java" % "5.1.47"
 
   lazy val log = Seq(
