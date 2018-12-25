@@ -15,10 +15,8 @@ resolvers += Resolver.url("ooon ivy repo", url("http://repo.ooon.me/release"))(
 
 externalResolvers := Resolver.combineDefaultResolvers(resolvers.value.toVector, mavenCentral = true)
 
-libraryDependencies ++= spark
-libraryDependencies ++= cdh
-libraryDependencies ++= log
-libraryDependencies ++= Seq(base, typesafe_config, graph_frame, mysql, scalatest)
+libraryDependencies ++= Seq(spark, breeze, cdh, log).flatten
+libraryDependencies ++= Seq(base, typesafe_config, mysql, scalatest)
 
 excludeDependencies ++= exclude
 

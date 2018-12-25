@@ -17,11 +17,10 @@ object Dependencies {
   val spark_version = "2.3.2"
   val cdh_version   = "2.6.0-cdh5.6.0"
 
-  lazy val base = "me.ooon" %% "base" % "1.0.27"
-  lazy val graph_frame     = "org.graphframes"  %% "graphframes"         % "0.7.0-spark2.3-SNAPSHOT"
-  lazy val scalatest       = "org.scalatest" %% "scalatest" % "3.0.4" % Test
-  lazy val typesafe_config = "com.typesafe"  % "config"     % "1.3.3"
-  lazy val mysql           = "mysql"            % "mysql-connector-java" % "5.1.47"
+  lazy val base            = "me.ooon"       %% "base"                % "1.0.29"
+  lazy val scalatest       = "org.scalatest" %% "scalatest"           % "3.0.4" % Test
+  lazy val typesafe_config = "com.typesafe"  % "config"               % "1.3.3"
+  lazy val mysql           = "mysql"         % "mysql-connector-java" % "5.1.47"
 
   lazy val log = Seq(
     "com.typesafe.scala-logging" %% "scala-logging"  % "3.9.0",
@@ -31,10 +30,16 @@ object Dependencies {
   val spark = Seq(
     "org.apache.spark" %% "spark-core"              % spark_version,
     "org.apache.spark" %% "spark-sql"               % spark_version,
+    "org.apache.spark" %% "spark-streaming"         % spark_version,
     "org.apache.spark" %% "spark-yarn"              % spark_version,
     "org.apache.spark" %% "spark-hive"              % spark_version,
     "org.apache.spark" %% "spark-hive-thriftserver" % spark_version,
     "org.apache.spark" %% "spark-graphx"            % spark_version
+  )
+
+  lazy val breeze = Seq(
+    "org.scalanlp" %% "breeze"         % "1.0-RC2",
+    "org.scalanlp" %% "breeze-natives" % "1.0-RC2"
   )
 
   val cdh = Seq(

@@ -14,14 +14,19 @@ import scala.language.implicitConversions
 /**
   * DatasetOps
   *
-  * log 需要开启 org.apache.spark.sql.syntax 的 logger 级别是 info
-  *
   * @author zhaihao
   * @version 1.0 2018/10/17 17:13
   */
 final class DatasetOps[T](dataset: Dataset[T]) extends StrictLogging {
+
+  /**
+    * log 需要开启 org.apache.spark.sql.syntax 的 logger 级别是 info
+    *
+    * spark show 日志输出在 std，故用 log 输出到 logback 中
+    */
   def log(numRows: Int = 20, truncate: Int = 20, vertical: Boolean = false) =
     logger.info("\n" + dataset.showString(numRows, truncate, vertical))
+
 }
 
 trait ToDatasetOps {

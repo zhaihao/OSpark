@@ -8,7 +8,7 @@
 package me.ooon.ospark
 import com.typesafe.scalalogging.StrictLogging
 import me.ooon.ospark.biz.Businesses
-import me.ooon.ospark.core.{Config, StartScreen}
+import me.ooon.ospark.core.{Config, Spark, StartScreen}
 import me.ooon.ospark.util.CommandArgs._
 import me.ooon.ospark.util.{AppType, CommandArgs}
 
@@ -18,12 +18,16 @@ import me.ooon.ospark.util.{AppType, CommandArgs}
   * @author zhaihao
   * @version 1.0 2018/10/16 10:58
   */
-object Application extends StrictLogging with Config {
+object Application extends StrictLogging with Config with Spark {
 
   def main(args: Array[String]): Unit = {
     StartScreen.welcome
-//    processArgs(Array("run","-t","graph","Users"))
-    processArgs(Array("--help"))
+////    processArgs(Array("run","-t","graph","Users"))
+//    processArgs(Array("--help"))
+    println(spark.version)
+    import org.apache.spark.sql.syntax.dataset._
+    import spark.implicits._
+    List(1, 2, 3).toDF("id").log()
 
   }
 
